@@ -16,6 +16,10 @@ export const Deck = () => {
     const [deck, setDeck] = useState<SchemaType | null>(null)
 
     const fetchData = async () => {
+        if (!router.isReady) {
+            return
+        }
+
         const { data: { data }, error } = await supabase
             .from("decks")
             .select("*")
@@ -46,7 +50,7 @@ export const Deck = () => {
 
     useEffect(() => {
         fetchData()
-    }, [])
+    }, [router.isReady])
 
     return (
         <div className={styles.root}>
